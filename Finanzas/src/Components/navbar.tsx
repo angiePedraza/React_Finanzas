@@ -13,6 +13,10 @@ import { useState } from 'react';
 const NavItems = [
   { text: 'Inicio', path: '/inicio', icon: <HomeIcon sx={{ color: '#fff' }} /> },
   { text: 'RegistroUsuarios', path: '/RegistroU', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
+  { text: 'Transacciones', path: '/Transacion', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
+  { text: 'Cuenta', path: '/Cuenta', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
+  { text: 'Categoria', path: '/Categoria', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
+  { text: 'Historial', path: '/Historial', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
 ];
 
 
