@@ -7,18 +7,22 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import CategoryIcon from '@mui/icons-material/Category';
+import ClassIcon from '@mui/icons-material/Class';
+import HistoryIcon from '@mui/icons-material/History';
 import { useState } from 'react';
-
 
 const NavItems = [
   { text: 'Inicio', path: '/inicio', icon: <HomeIcon sx={{ color: '#fff' }} /> },
-  { text: 'RegistroUsuarios', path: '/RegistroU', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
-  { text: 'Transacciones', path: '/Transacion', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
-  { text: 'Cuenta', path: '/Cuenta', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
-  { text: 'Categoria', path: '/Categoria', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
-  { text: 'Historial', path: '/Historial', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
+  { text: 'Registro Usuarios', path: '/RegistroU', icon: <PersonAddAltIcon sx={{ color: '#fff' }} /> },
+  { text: 'Transacciones', path: '/Transacciones', icon: <AccountBalanceWalletIcon sx={{ color: '#fff' }} /> },
+  { text: 'Cuentas', path: '/Cuenta', icon: <AccountBalanceIcon sx={{ color: '#fff' }} /> },
+  { text: 'Tipos de Cuenta', path: '/TipoCuenta', icon: <CategoryIcon sx={{ color: '#fff' }} /> },
+  { text: 'Categorías', path: '/Categoria', icon: <ClassIcon sx={{ color: '#fff' }} /> },
+  { text: 'Historial', path: '/Historial', icon: <HistoryIcon sx={{ color: '#fff' }} /> },
 ];
-
 
 const Navbar = () => {
 const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,7 +33,7 @@ const handleDrawerToggle = () => {
 const drawer =(
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center',background:'#1e1e1e',height:'100%' }}>
         <Typography variant="h6" sx={{ my: 2,color:'#fff' }}>
-            Usuarios
+            Sistema Financiero
         </Typography>
         <List>
             {NavItems.map((item) => (
@@ -37,15 +41,16 @@ const drawer =(
                     <RouterLink to={item.path}
                     style={{
                         textDecoration: 'none',
-                        padding: 'irem',
+                        padding: '1rem',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',color: '#fff',width:'100%'
+                        gap: '8px',
+                        color: '#fff',
+                        width:'100%'
                     }}
                     >
                         {item.icon}
                         <ListItemText primary={item.text} />
-                        
                     </RouterLink>
                 </ListItem>
             ))
@@ -55,14 +60,14 @@ const drawer =(
 );
 
 return(
-    <Box sx={{ flexGrow:10}}>
+    <Box sx={{ flexGrow:1}}>
         <AppBar sx={{width:'100%',height:80, background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", color: "white"}}>
             <Toolbar>
-                <IconButton color="inherit" onClick={handleDrawerToggle} edge="start" sx={{mr:100,display:{sm:'none'}}} >
+                <IconButton color="inherit" onClick={handleDrawerToggle} edge="start" sx={{mr:2,display:{sm:'none'}}} >
                     <Menuicon/>
                 </IconButton>
-                <Typography variant='h5'component="div" sx={{flexGrow:1}}>Usuarios</Typography>
-                <Box sx={{display:{xs:'none', sm:'flex'},gap:7}}>
+                <Typography variant='h5'component="div" sx={{flexGrow:1}}>Sistema Financiero</Typography>
+                <Box sx={{display:{xs:'none', sm:'flex'},gap:2}}>
                     {
                         NavItems.map((item) =>(
                             <Button
@@ -70,14 +75,20 @@ return(
                             component={RouterLink}
                             to={item.path}
                             startIcon={item.icon}
-                            sx={{ textTransform:"none",color:"#fff",
-                                '&:hover':{backgroundColor:"#333"}}}
-                                >
-                                    {item.text}
+                            size="small"
+                            sx={{ 
+                                textTransform:"none",
+                                color:"#fff",
+                                fontSize: '0.8rem',
+                                minWidth: 'auto',
+                                px: 1,
+                                '&:hover':{backgroundColor:"rgba(255,255,255,0.1)"}
+                            }}
+                            >
+                                {item.text}
                             </Button>
                         ))
                     }
-                    
                 </Box>
             </Toolbar>
         </AppBar>
@@ -98,7 +109,6 @@ return(
                 color: '#fff'
             }
         }}>
-
             {drawer}
         </Drawer>
         {/* espacio para el contenido */}
