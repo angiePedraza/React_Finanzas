@@ -1,28 +1,41 @@
-import ResumenFinanciero from "../Components/ResumenFinanciero";
+import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import ResumenFinanciero from "../Components/ResumenFinanciero";
 
 interface TokenData {
-  usuario_id: number;
+  sub: number; // El ID del usuario está en el campo "sub"
 }
 
 function Inicio() {
-  const token = localStorage.getItem("token");
-  let usuario_id = 0;
+  const [usuarioId, setUsuarioId] = useState<number | null>(null);
+  const [periodo, setPeriodo] = useState<"mensual" | "semanal">("mensual");
 
-  if (token) {
-    const decoded = jwtDecode<TokenData>(token);
-    usuario_id = decoded.usuario_id;
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode<TokenData>(token);
+        setUsuarioId(decoded.sub); // Aquí se usa 'sub'
+      } catch (error) {
+        console.error("Error al decodificar el token:", error);
+      }
+    }
+  }, []);
+
+  if (usuarioId === null) {
+    return <p className="p-4">Cargando usuario...</p>;
   }
 
   return (
     <div className="container mx-auto">
-      {usuario_id !== 0 ? (
-        <ResumenFinanciero usuario_id={usuario_id} periodo="mensual" />
-      ) : (
-        <p>No se pudo obtener el usuario. Por favor inicia sesión.</p>
-      )}
+      <ResumenFinanciero
+        usuario_id={usuarioId}
+        periodo={periodo}
+        onPeriodoChange={setPeriodo}
+      />
     </div>
   );
 }
+
 
 export default Inicio;
