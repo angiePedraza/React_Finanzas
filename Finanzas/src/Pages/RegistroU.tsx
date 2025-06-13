@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import FormularioUsuario from '../Components/formularioU';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
