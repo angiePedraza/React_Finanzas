@@ -1,4 +1,5 @@
-// src/Components/FormularioTransaccion.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// src/Components/FormularioTransaccion.tsx - CORREGIDO
 import React from "react";
 import {
     Paper,
@@ -16,14 +17,14 @@ import {
     Radio,
     FormLabel,
 } from "@mui/material";
-import type  { FormularioTransaccionProps } from '../Types';
+import type { FormularioTransaccionProps } from '../Types';
 
 const FormularioTransaccion: React.FC<FormularioTransaccionProps> = ({ 
     initialData, 
     onSubmit, 
     onCancel,
-    categorias,
-    cuentas
+    categorias = [],
+    cuentas = []
 }) => {
     const [formData, setFormData] = React.useState({
         cuenta_id: "",
@@ -65,7 +66,10 @@ const FormularioTransaccion: React.FC<FormularioTransaccionProps> = ({
         setCategoriasFiltradas(filtered);
         
         // Si la categoría actual no coincide con el tipo, resetearla
-        const categoriaActual = categorias.find(cat => cat.id.toString() === formData.categoria_id);
+        const categoriaActual = categorias.find(cat => {
+            const catId = cat.id || cat.idCategoria;
+            return catId?.toString() === formData.categoria_id;
+        });
         if (categoriaActual && categoriaActual.tipo !== formData.tipo) {
             setFormData(prev => ({ ...prev, categoria_id: "" }));
         }
@@ -185,7 +189,7 @@ const FormularioTransaccion: React.FC<FormularioTransaccionProps> = ({
                             >
                                 {cuentas.map((cuenta) => (
                                     <MenuItem key={cuenta.id} value={cuenta.id?.toString()}>
-                                        {cuenta.nombre} - {cuenta.tipo_cuenta_nombre}
+                                        {cuenta.nombre} {cuenta.tipo_cuenta_nombre ? `- ${cuenta.tipo_cuenta_nombre}` : ''}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -200,11 +204,14 @@ const FormularioTransaccion: React.FC<FormularioTransaccionProps> = ({
                                 label="Categoría"
                                 onChange={handleSelectChange}
                             >
-                                {categoriasFiltradas.map((categoria) => (
-                                    <MenuItem key={categoria.id} value={categoria.id.toString()}>
-                                        {categoria.nombre}
-                                    </MenuItem>
-                                ))}
+                                {categoriasFiltradas.map((categoria) => {
+                                    const catId = categoria.id || categoria.idCategoria;
+                                    return (
+                                        <MenuItem key={catId} value={catId?.toString()}>
+                                            {categoria.nombre}
+                                        </MenuItem>
+                                    );
+                                })}
                             </Select>
                         </FormControl>
 

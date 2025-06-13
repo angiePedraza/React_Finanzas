@@ -1,4 +1,4 @@
-// src/Types/index.ts
+// src/Types/index.ts - CORREGIDO
 export interface TipoCuenta {
   id?: number;
   nombre: string;
@@ -6,7 +6,7 @@ export interface TipoCuenta {
 
 export interface Cuenta {
   id?: number;
-  usuario_id: number;
+  usuario_id?: number;
   nombre: string;
   tipo_cuenta_id: number;
   saldo: number;
@@ -14,7 +14,8 @@ export interface Cuenta {
 }
 
 export interface Categoria {
-  id: number;
+  idCategoria?: number;
+  id?: number; // Para compatibilidad
   nombre: string;
   tipo: 'ingreso' | 'gasto';
 }
@@ -34,7 +35,8 @@ export interface Transaccion {
 // Interfaces para respuestas de API
 export interface ApiResponse<T> {
   success: boolean;
-  message: string;
+  message?: string;
+  msg?: string;
   data?: T;
 }
 
@@ -75,7 +77,7 @@ export interface FormularioCuentaProps {
 export interface FormularioTransaccionProps {
   onSubmit: (data: Transaccion) => void;
   onCancel: () => void;
-  initialData?: Transaccion;
+  initialData?: Transaccion | null;
   categorias: Categoria[];
   cuentas: Cuenta[];
 }
